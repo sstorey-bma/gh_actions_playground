@@ -48,7 +48,7 @@ jobs:
       - name: 'Connect to docker'
         uses: azure/docker-login@v1
         with:
-          login-server: myregistry.azurecr.io
+          login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
           username: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Username }}
           password: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Password }}       
       

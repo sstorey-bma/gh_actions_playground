@@ -20,15 +20,39 @@ jobs:
     runs-on: ubuntu-latest
     environment: DEVELOPMENT    
     steps:
-      - name: Login via Az module
+      - name: 'Checkout Github repo'
+        uses: actions/checkout@v2
+          
+      - name: 'Login via Az module'
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        
+
+      - name: 'Get Azure KeyVault secrets'   
+        uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ secrets.AZURE_KEYVAULT }}
+          secrets: 'AZURE_CONTAINER_REPO_Username, AZURE_CONTAINER_REPO_Password'
+        id: azkv_GetSecrets
+      
       - name: 'Run az commands'
         run: |
+          echo ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Username
+          echo ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Password
           az account show
           az group list
           pwd 
+        
+      - name: 'Connect to docker'
+        uses: azure/docker-login@v1
+        with:
+          login-server: myregistry.azurecr.io
+          username: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Username }}
+          password: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Password }}       
+      
+      - name: 'List contents of Docker container registry'
+        run: |
+          docker ps -all
+          docker images -all

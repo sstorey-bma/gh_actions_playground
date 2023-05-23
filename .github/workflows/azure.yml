@@ -39,8 +39,8 @@ jobs:
       
       - name: 'Run az commands'
         run: |
-          echo ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Username }}
-          echo ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Password }}
+          echo ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Username }}
+          echo ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Password }}
           az account show
           az group list
           pwd 
@@ -49,8 +49,8 @@ jobs:
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-          username: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Username }}
-          password: ${{ steps.azkv_GetSecrets.outputs.AZURE_CONTAINER_REPO_Password }}       
+          username: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Username }}
+          password: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Password }}       
       
       - name: 'List contents of Docker container registry'
         run: |

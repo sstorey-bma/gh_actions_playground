@@ -4,18 +4,26 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main      
   workflow_dispatch:
+
+permissions:
+      id-token: write
+      contents: read
 
 name: SampleWorkflowUsingAzure
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: DEVELOPMENT    
     steps:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{secrets.AZURE_CREDENTIALS}}    
+          creds: ${{secrets.AZURE_CREDENTIALS}}
         
       - name: 'Run az commands'
         run: |

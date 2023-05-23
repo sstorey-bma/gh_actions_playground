@@ -34,7 +34,7 @@ jobs:
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: ${{ secrets.AZURE_KEYVAULT }}
-          secrets: 'AZURE_CONTAINER_REPO_Username, AZURE_CONTAINER_REPO_Password'
+          secrets: 'AZURE-CONTAINER-REPO-Username, AZURE-CONTAINER-REPO-Password'
         id: azkv_GetSecrets
       
       - name: 'Run az commands'

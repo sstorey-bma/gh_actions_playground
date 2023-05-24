@@ -19,10 +19,11 @@ ENV PYTHONFAULTHANDLER=1
 # See article https://pipenv.pypa.io/en/latest/docker/
 ARG PYTHON_VERSION=3.10.4
 FROM docker.io/python:${PYTHON_VERSION}-slim as builder
-RUN pip install --user "pipenv==2023.5.19"
 
 # Tell pipenv to create venv in the current directory
 ENV PIPENV_VENV_IN_PROJECT=1
+
+RUN pip install --user "pipenv==2023.5.19"
 
 # Pipfile contains requests
 ADD Pipfile.lock Pipfile /app
@@ -46,7 +47,7 @@ FROM docker.io/python:${PYTHON_VERSION}-slim as runtime
 RUN mkdir -v /app/.venv
 COPY --from=builder /app/.venv/ /app/.venv/
 
-RUN /usr/src/.venv/bin/python -c "import requests; print(requests.__version__)"
+RUN /app/.venv/bin/python -c "import requests; print(requests.__version__)"
 
 # ############################################################################
 # Code for the runtime application image
@@ -68,6 +69,7 @@ WORKDIR /app
 # Switch to the non-privileged user to run the application.
 USER appuser
 
+EXPOSE 8000
+
 # Run the application.
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD ["python","app.py"]

@@ -3,16 +3,6 @@
 # Dockerfile reference guide 
 # https://docs.docker.com/engine/reference/builder/
 
-# Prevents Python from writing pyc files.
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# Keeps Python from buffering stdout and stderr to avoid situations where
-# the application crashes without emitting any logs due to buffering.
-ENV PYTHONUNBUFFERED=1
-
-# Dumps Python tracebacks explicitly, on a fault, after a timeout, or on a user signal
-ENV PYTHONFAULTHANDLER=1
-
 # ############################################################################
 # Image for the build stage (as can contain additional dependencies)
 # ############################################################################
@@ -20,15 +10,13 @@ ENV PYTHONFAULTHANDLER=1
 ARG PYTHON_VERSION=3.10.4
 FROM docker.io/python:${PYTHON_VERSION}-slim as builder
 
-# Tell pipenv to create venv in the current directory
-ENV PIPENV_VENV_IN_PROJECT=1
+COPY . /code
+WORKDIR /code
 
-RUN pip install --user "pipenv==2023.5.19"
+RUN pip install "pipenv==2023.5.19"
 
-# Pipfile contains requests
-ADD Pipfile.lock Pipfile /app
-
-WORKDIR /app
+# Now install dependencies
+RUN pipenv install --deploy --system --ignore-pipfile
 
 # NOTE: If you install binary packages required for a python module, you need
 # to install them again in the runtime. For example, if you need to install pycurl
@@ -36,22 +24,8 @@ WORKDIR /app
 # In the runtime container you need only libcurl3-gnutls
 # RUN apt install -y libcurl3-gnutls libcurl4-gnutls-dev
 
-RUN /root/.local/bin/pipenv sync
-RUN /app/.venv/bin/python -c "import requests; print(requests.__version__)"
+RUN python -c "import flask; print(flask.__version__)"
 
-# ############################################################################
-# Image for the runtime 
-# ############################################################################
-FROM docker.io/python:${PYTHON_VERSION}-slim as runtime
-
-RUN mkdir -v /app/.venv
-COPY --from=builder /app/.venv/ /app/.venv/
-
-RUN /app/.venv/bin/python -c "import requests; print(requests.__version__)"
-
-# ############################################################################
-# Code for the runtime application image
-# ############################################################################
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
 ARG UID=10001
@@ -66,10 +40,20 @@ RUN adduser \
 
 WORKDIR /app
 
+# Prevents Python from writing pyc files.
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Keeps Python from buffering stdout and stderr to avoid situations where
+# the application crashes without emitting any logs due to buffering.
+ENV PYTHONUNBUFFERED=1
+
+# Dumps Python tracebacks explicitly, on a fault, after a timeout, or on a user signal
+ENV PYTHONFAULTHANDLER=1
+
 # Switch to the non-privileged user to run the application.
 USER appuser
 
 EXPOSE 8000
 
 # Run the application.
-CMD ["python","app.py"]
+CMD ["pipenv","run" ,"python","app.py"]

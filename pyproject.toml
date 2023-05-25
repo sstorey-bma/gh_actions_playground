@@ -1,6 +1,12 @@
 [project]
 name="gh_actions_playground"
 
+[tool.flake8]
+max-line-length = 88
+
+[tool.black]
+skip-string-normalization = true
+
 [tool.pytest.ini_options]
 addopts = [
     "--import-mode=importlib",

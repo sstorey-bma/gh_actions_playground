@@ -95,7 +95,7 @@ jobs:
       - name: Run static type checking (pyright)
         uses: jakebailey/pyright-action@v1
         with:
-          venv: ${{ env.VENV }}
+          venv-path: ${{ env.VENV }}
 
       - name: Test with pytest
         run: |

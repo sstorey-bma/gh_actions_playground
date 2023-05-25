@@ -25,6 +25,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   PYTHON_VERSION: "3.10"
   NODEJS_VERSION: "16"
+  PYTEST_VERBOSITY: "0"
   
 jobs:
   build-and-deploy:
@@ -60,7 +61,7 @@ jobs:
           
       - name: Install core dependancies
         run: |
-          python -m pip install --upgrade pipenv wheel flake8 pytest
+          python -m pip install --upgrade pipenv wheel flake8 pytest pytest-github-report
           
       - name: Cache pipenv
         id: cache-pipenv
@@ -100,8 +101,10 @@ jobs:
           venv: ${{ env.VENV }}
 
       - name: Test with pytest
+        env:
+          pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest
+          pytest --github-report 
           
       - name: 'Login via Az module'
         uses: azure/login@v1

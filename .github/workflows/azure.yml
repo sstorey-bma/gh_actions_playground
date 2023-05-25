@@ -73,7 +73,7 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
-          echo ${pipenv --venv} >> $VENV
+          echo $(pipenv --venv) >> $VENV
           
 #      - name: Run test suite
 #        run: |

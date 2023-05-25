@@ -40,11 +40,15 @@ jobs:
           secrets: 'AZURE-CONTAINER-REPO-Username, AZURE-CONTAINER-REPO-Password'
         id: azkv_GetSecrets
 
+      - name: 'Lowercase the repo name'
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV} 
+          
+        
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: name/app
+          images: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.GITHUB_ENV }}
           tags: type=sha
 
       - name: 'Set up Docker Buildx'
@@ -57,9 +61,6 @@ jobs:
           username: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Username }}
           password: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Password }}      
           
-      - name: 'Lowercase the repo name'
-        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-        
       - name: 'Build and push docker container to registry'
         uses: docker/build-push-action@v4
         with:

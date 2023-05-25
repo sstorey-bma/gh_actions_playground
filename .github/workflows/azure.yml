@@ -44,10 +44,6 @@ jobs:
           keyvault: ${{ secrets.AZURE_KEYVAULT }}
           secrets: 'AZURE-CONTAINER-REPO-Username, AZURE-CONTAINER-REPO-Password'
         id: azkv_GetSecrets
-
-      - name: 'Lowercase the repo name'
-        run: echo "REPO=${github.repository,,}" >> ${GITHUB_ENV} 
-          
         
       - name: Docker meta
         id: meta

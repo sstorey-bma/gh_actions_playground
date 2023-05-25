@@ -1,0 +1,7 @@
+[project]
+name="gh_actions_playground"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]

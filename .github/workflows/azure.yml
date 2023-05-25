@@ -72,7 +72,7 @@ jobs:
       - name: Install dependencies and write VENV environment variable for correct virtual env path
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
-          pipenv install --deploy --dev --ignore-pipfile
+          pipenv install --deploy --system --ignore-pipfile
           echo "VENV_PATH=$(dirname $(pipenv --venv))" >> "$GITHUB_ENV"            
           echo "VENV=$(basename $(pipenv --venv))" >> "$GITHUB_ENV"            
           

@@ -69,11 +69,11 @@ jobs:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
 
-      - name: Install dependencies
+      - name: Install dependencies and write VENV environment variable for correct virtual env path
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
-          echo $(pipenv --venv) >> $VENV
+          echo "VENV=$(pipenv --venv)" >> "$GITHUB_ENV"
           
 #      - name: Run test suite
 #        run: |

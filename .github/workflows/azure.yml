@@ -73,9 +73,8 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev --ignore-pipfile
-          echo "VENV=$(pipenv --venv)" >> "$GITHUB_ENV"                    
-          pipenv run python -c "import flask; print(flask.__version__)"
-          python -c "import flask; print(flask.__version__)"
+          echo "VENV_PATH=$(dirname $(pipenv --venv))" >> "$GITHUB_ENV"            
+          echo "VENV=$(basename $(pipenv --venv))" >> "$GITHUB_ENV"            
           
 #      - name: Run test suite
 #        run: |
@@ -97,7 +96,8 @@ jobs:
       - name: Run static type checking (pyright)
         uses: jakebailey/pyright-action@v1
         with:
-          venvpath: ${{ env.VENV }}
+          venvpath: ${{ env.VENV_PATH }}
+          venv: ${{ env.VENV }}
 
       - name: Test with pytest
         run: |

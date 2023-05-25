@@ -54,7 +54,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ PYTHON_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
           architecture: x64
           
       - name: Install core dependancies

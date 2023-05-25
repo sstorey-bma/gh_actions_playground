@@ -18,6 +18,11 @@ permissions:
       id-token: write
       contents: read
       
+env:
+  # Configures the registry. By default, docker.io is used when no registry is specified.
+  REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -41,14 +46,14 @@ jobs:
         id: azkv_GetSecrets
 
       - name: 'Lowercase the repo name'
-        run: echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV} 
+        run: echo "REPO=${github.repository,,}" >> ${GITHUB_ENV} 
           
         
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.GITHUB_ENV }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: type=sha
 
       - name: 'Set up Docker Buildx'
@@ -57,7 +62,7 @@ jobs:
       - name: 'Connect to docker'
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
+          login-server: ${{ env.REGISTRY }}
           username: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Username }}
           password: ${{ steps.azkv_GetSecrets.outputs.AZURE-CONTAINER-REPO-Password }}      
           

@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - dev
     tags:
       - 'v*'
   pull_request:
@@ -23,7 +22,7 @@ env:
   # Configures the registry. By default, docker.io is used when no registry is specified.
   REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
   IMAGE_NAME: ${{ github.repository }}
-  PYTHON_VERSION: "3.10"
+  PYTHON_VERSION: "3.11"
   NODEJS_VERSION: "16"
   PYTEST_VERBOSITY: "0"
   
@@ -67,9 +66,7 @@ jobs:
       - name: Install dependencies and write VENV environment variable for correct virtual env path
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
-          pipenv install --deploy --system --ignore-pipfile
-          echo "VENV_PATH=$(dirname $(pipenv --venv))" >> "$GITHUB_ENV"            
-          echo "VENV=$(basename $(pipenv --venv))" >> "$GITHUB_ENV"            
+          pipenv install --deploy --system --ignore-pipfile            
           
       - name: Run flake8
         uses: suo/flake8-github-action@releases/v1
@@ -80,9 +77,6 @@ jobs:
                     
       - name: Run static type checking (pyright)
         uses: jakebailey/pyright-action@v1
-        with:
-          venvpath: ${{ env.VENV_PATH }}
-          venv: ${{ env.VENV }}
 
       - name: Test with pytest
         env:

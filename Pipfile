@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask = "*"
 
 [dev-packages]
 pre-commit = "*"
@@ -15,3 +16,6 @@ pyright = "*"
 
 [requires]
 python_version = "3.11"
+
+[pipenv]
+allow_prereleases = true

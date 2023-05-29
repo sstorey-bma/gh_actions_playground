@@ -1,3 +1,3 @@
 # gh_actions_playground
 
-Add a comment here, to trigger githubActions
+Python playground project and repo showing Github CI/CD with Azure

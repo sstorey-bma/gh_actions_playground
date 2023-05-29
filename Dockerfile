@@ -7,13 +7,13 @@
 # Image for the build stage (as can contain additional dependencies)
 # ############################################################################
 # See article https://pipenv.pypa.io/en/latest/docker/
-ARG PYTHON_VERSION=3.10.4
+ARG PYTHON_VERSION=3.11.3
 FROM docker.io/python:${PYTHON_VERSION}-slim as builder
 
 COPY . /code
 WORKDIR /code
 
-RUN pip install "pipenv==2023.5.19"
+RUN pip install pipenv
 
 # Now install dependencies
 RUN pipenv install --deploy --system --ignore-pipfile

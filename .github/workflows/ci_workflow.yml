@@ -18,17 +18,8 @@ permissions:
       id-token: write
       issues: write
       pull-requests: write
-      #actions: write
       contents: write      
-      #checks: write
-      #repository-projects: write
-      #security-events: write
-      #statuses: write
-      #deployments: write
-      #discussions: write
-      #packages: write
-      #pages: write
-     
+           
 env:
   # Configures the registry. By default, docker.io is used when no registry is specified.
   REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
@@ -108,9 +99,6 @@ jobs:
         run: |
           set -o pipefail
           echo '### Coverage report' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo '\n\n\n' >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
           echo '${{ steps.coverageComment.outputs.coverageHtml }}' >> $GITHUB_STEP_SUMMARY
 
       - name: 'Login via Az CLI module using Github OIDC provider'

@@ -82,8 +82,14 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --github-report 
-          
+          pytest --github-report --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml          
+
       - name: 'Login via Az CLI module using Github OIDC provider'
         uses: azure/login@v1
         with:

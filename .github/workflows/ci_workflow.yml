@@ -16,9 +16,18 @@ on:
     
 permissions:
       id-token: write
-      contents: read      
       issues: write
       pull-requests: write
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      discussions: write
+      packages: write
+      pages: write
+      repository-projects: write
+      security-events: write
+      statuses: write
 
 env:
   # Configures the registry. By default, docker.io is used when no registry is specified.

@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
+pytest-github-report = "*"
 
 [dev-packages]
 pre-commit = "*"

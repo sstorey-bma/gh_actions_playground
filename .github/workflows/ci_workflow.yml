@@ -61,7 +61,7 @@ jobs:
           
       - name: Install core dependancies
         run: |
-          python -m pip install --upgrade pipenv wheel flake8 flake8-black pytest pytest-github-report
+          python -m pip install --upgrade pipenv wheel flake8 flake8-black pytest pytest-cov pytest-github-report
 
       - name: Install dependencies and write VENV environment variable for correct virtual env path
         if: steps.cache-pipenv.outputs.cache-hit != 'true'

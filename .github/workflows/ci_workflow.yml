@@ -19,11 +19,11 @@ permissions:
       issues: write
       pull-requests: write
       actions: write
-      checks: write
-      contents: write
-      repository-projects: write
-      security-events: write
-      statuses: write
+      contents: write      
+      #checks: write
+      #repository-projects: write
+      #security-events: write
+      #statuses: write
       #deployments: write
       #discussions: write
       #packages: write
@@ -107,9 +107,9 @@ jobs:
         if: ${{ success() }}
         run: |
           set -o pipefail
-          echo '## Coverage report' >> $GITHUB_STEP_SUMMARY
+          echo '### Coverage report' >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          echo '\n\n\n'
+          echo '\n\n\n' >> $GITHUB_STEP_SUMMARY
           echo '${{ steps.coverageComment.outputs.coverageHtml }}' >> $GITHUB_STEP_SUMMARY
 
       - name: 'Login via Az CLI module using Github OIDC provider'

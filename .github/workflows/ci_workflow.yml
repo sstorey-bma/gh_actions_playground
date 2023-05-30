@@ -93,7 +93,7 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --doctest-modules --cov=. --cov-report term-missing --cov-report=html --junitxml=pytest.xml | tee pytest-coverage.txt
+          pytest --github-report --doctest-modules --cov=. --cov-report term-missing --cov-report=html --junitxml=pytest.xml | tee pytest-coverage.txt
       
       - name: Pytest coverage comment
         id: coverageComment
@@ -113,20 +113,6 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo '\n\n\n'
           echo '${{ steps.coverageComment.outputs.coverageHtml }}' >> $GITHUB_STEP_SUMMARY
-
-      - name: Check the output coverage
-        run: |
-          echo "Coverage Percantage - ${{ steps.coverageComment.outputs.coverage }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
-          echo "Coverage Html - ${{ steps.coverageComment.outputs.coverageHtml }}"
-          echo "Summary Report - ${{ steps.coverageComment.outputs.summaryReport }}"    
-          echo "Coverage Warnings - ${{ steps.coverageComment.outputs.warnings }}"    
-          echo "Coverage Errors - ${{ steps.coverageComment.outputs.errors }}"
-          echo "Coverage Failures - ${{ steps.coverageComment.outputs.failures }}"
-          echo "Coverage Skipped - ${{ steps.coverageComment.outputs.skipped }}"
-          echo "Coverage Tests - ${{ steps.coverageComment.outputs.tests }}"
-          echo "Coverage Time - ${{ steps.coverageComment.outputs.time }}"
-          echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
 
       - name: 'Login via Az CLI module using Github OIDC provider'
         uses: azure/login@v1

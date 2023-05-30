@@ -18,8 +18,8 @@ permissions:
       id-token: write
       issues: write
       pull-requests: write
-      actions: write
-      #contents: write      
+      #actions: write
+      contents: write      
       #checks: write
       #repository-projects: write
       #security-events: write

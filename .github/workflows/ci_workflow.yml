@@ -21,14 +21,14 @@ permissions:
       actions: write
       checks: write
       contents: write
-      deployments: write
-      discussions: write
-      packages: write
-      pages: write
       repository-projects: write
       security-events: write
       statuses: write
-
+      #deployments: write
+      #discussions: write
+      #packages: write
+      #pages: write
+     
 env:
   # Configures the registry. By default, docker.io is used when no registry is specified.
   REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY }}.azurecr.io
@@ -107,7 +107,7 @@ jobs:
         if: ${{ success() }}
         run: |
           set -o pipefail
-          echo '# Coverage report' >> $GITHUB_STEP_SUMMARY
+          echo '## Coverage report' >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo '\n\n\n'
           echo '${{ steps.coverageComment.outputs.coverageHtml }}' >> $GITHUB_STEP_SUMMARY

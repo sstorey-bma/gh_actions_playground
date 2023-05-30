@@ -1,7 +1,7 @@
 # File: .github/workflows/azure.yml
 # tags: [ 'v*.*.*' ]
 
-name: SampleWorkflowUsingAzure
+name: ContinuousIntegration
 
 on: 
   push:
@@ -82,7 +82,7 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --github-report --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=app tests/ | tee pytest-coverage.txt
+          pytest --github-report --junitxml=./pytest.xml --cov-report=term-missing:skip-covered --cov=${{ github.repository }} tests/ | tee ./pytest-coverage.txt
 
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main

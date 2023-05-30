@@ -82,9 +82,7 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --github-report tests/  --cov=coverage/
-          ls tests/
-          ls coverage/
+          pytest --github-report tests/ --cov=. --cov-report html
 
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main

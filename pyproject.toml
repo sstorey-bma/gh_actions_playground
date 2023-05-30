@@ -4,6 +4,9 @@ name="gh_actions_playground"
 
 [tool.flake8]
 max-line-length = 88
+extend-ignore = E203
+exclude =
+    .pytest_cache
 
 [tool.black]
 skip-string-normalization = true

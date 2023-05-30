@@ -1,3 +1,4 @@
+# https://docs.pytest.org/en/7.1.x/reference/customize.html
 [project]
 name="gh_actions_playground"
 
@@ -9,5 +10,10 @@ skip-string-normalization = true
 
 [tool.pytest.ini_options]
 addopts = [
-    "--import-mode=importlib",
+    "--import-mode=importlib","-ra -q"
+]
+minversion = "6.0"
+testpaths = [
+    "tests",
+    "integration",
 ]

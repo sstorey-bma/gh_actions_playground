@@ -82,13 +82,26 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --github-report tests/ --cov=. --cov-report html
-
+          pytest --doctest-modules --cov=. --cov-report term-missing --cov-report=html --junitxml=pytest.xml | tee pytest-coverage.txt
+      
       - name: Pytest coverage comment
+        id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-coverage-path: ./pytest-coverage.txt
-          junitxml-path: ./pytest.xml          
+          pytest-coverage-path: pytest-coverage.txt
+          junitxml-path: pytest.xml          
+      
+      # add content to GitHub summary (&& github.event_name == 'pull_request')
+      - name: Pytest coverage GitHub summary
+        if: ${{ success() }}
+        run: |
+          set -o pipefail
+          echo '# Coverage report' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat pytest-coverage.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo '\n\n\n'
+          echo '${{ steps.coverageComment.outputs.coverageHtml }}' >> $GITHUB_STEP_SUMMARY
 
       - name: 'Login via Az CLI module using Github OIDC provider'
         uses: azure/login@v1

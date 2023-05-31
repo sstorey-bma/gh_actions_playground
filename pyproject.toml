@@ -2,11 +2,9 @@
 [project]
 name="gh_actions_playground"
 
+# https://flake8.pycqa.org/en/latest/user/options.html
 [tool.flake8]
 max-line-length = 88
-extend-ignore = E203
-exclude =
-    .pytest_cache
 
 [tool.black]
 skip-string-normalization = true

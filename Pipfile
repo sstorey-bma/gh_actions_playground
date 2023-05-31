@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
-pytest-github-report = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pre-commit = "*"
@@ -15,6 +15,7 @@ flake8-black = "*"
 black = "*"
 pyright = "*"
 pytest-cov = "*"
+pytest-github-report = "*"
 
 [requires]
 python_version = "3.11"

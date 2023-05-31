@@ -1,7 +1,11 @@
+version: "3.9"
 services:
   server:
     build:
       context: .
+      dockerfile: ./Dockerfile
+      args:
+        - FLASK_PORT=${FLASK_CONTAINER_PORT}
     ports:
-      - 8000:8000
+      - ${HOST_PORT}:${FLASK_CONTAINER_PORT}
 

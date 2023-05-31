@@ -1,4 +1,2 @@
 [run]
-omit =
-    # Ignore all test cases during coverage calculations
-    /tests/*
+omit = ./tests/*

@@ -84,7 +84,7 @@ jobs:
         env:
           pytest_verbosity: ${{ env.PYTEST_VERBOSITY }}
         run: |
-          pytest --github-report --doctest-modules --cov=. --cov-report term-missing --cov-report=html --junitxml=pytest.xml | tee pytest-coverage.txt
+          python -m pytest --github-report --doctest-modules --cov=. --cov-report term-missing --cov-report=html --junitxml=pytest.xml | tee pytest-coverage.txt
       
       - name: Pytest coverage comment
         id: coverageComment

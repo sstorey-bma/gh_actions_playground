@@ -1,8 +1,6 @@
-# https://docs.pytest.org/en/7.1.x/reference/customize.html
 [project]
 name="gh_actions_playground"
 
-# https://flake8.pycqa.org/en/latest/user/options.html
 [tool.flake8]
 max-line-length = 88
 
@@ -10,9 +8,7 @@ max-line-length = 88
 skip-string-normalization = true
 
 [tool.pytest.ini_options]
-addopts = [
-    "--import-mode=importlib","-ra -q"
-]
+addopts = "-ra -q"
 minversion = "6.0"
 testpaths = [
     "tests",

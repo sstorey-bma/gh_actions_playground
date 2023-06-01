@@ -3,11 +3,16 @@ name="gh_actions_playground"
 
 [tool.flake8]
 max-line-length = 88
+extend-ignore = E203
 
 [tool.black]
 skip-string-normalization = true
+include = '*.py'
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"
 minversion = "6.0"
 testpaths = "tests"
+
+[tool.isort]
+profile = 'black'

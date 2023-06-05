@@ -6,12 +6,8 @@ name: ContinuousIntegration
 on: 
   push:
     branches:
-      - main
-    tags:
-      - 'v*'
-  pull_request:
-    branches:
-      - main      
+      - fb-*
+      - develop   
   workflow_dispatch:
     
 permissions:

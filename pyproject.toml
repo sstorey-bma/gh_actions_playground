@@ -1,18 +1,27 @@
 [project]
 name="gh_actions_playground"
 
-[tool.flake8]
-max-line-length = 88
-extend-ignore = E203
-
-[tool.black]
-skip-string-normalization = true
-include = '*.py'
-
 [tool.pytest.ini_options]
-addopts = "-ra -q"
+addopts = ["-ra -q"]
 minversion = "6.0"
 testpaths = "tests"
 
-[tool.isort]
-profile = 'black'
+[tool.black]
+preview = true
+skip-string-normalization = true
+line-length = 80
+target-version = ['py311']
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.pytest_cache
+    | \.logs
+    | \.github
+  )/
+)
+'''
+
+[tool.flake8]
+max-line-length = 80

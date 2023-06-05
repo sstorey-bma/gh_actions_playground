@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
+azure-monitor-opentelemetry = "*"
+applicationinsights = "*"
 
 [dev-packages]
 pre-commit = "*"

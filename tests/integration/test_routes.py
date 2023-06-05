@@ -10,6 +10,6 @@ def test_index_page(test_client):
     THEN check the response is valid
     AND contains some relevant text (Title)
     """
-    response = test_client.get('/')
+    response = test_client.get("/")
     assert response.status_code == 200
-    assert b'Built using Docker' in response.data
+    assert b"Built using Docker" in response.data

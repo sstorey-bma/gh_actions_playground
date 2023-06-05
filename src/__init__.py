@@ -10,21 +10,6 @@ from applicationinsights.flask.ext import AppInsights
 
 
 # ----------------------------
-# Set up formatting for log entries
-# ----------------------------
-class RequestFormatter(Formatter):
-    def format(self, record):
-        if has_request_context():
-            record.url = request.url
-            record.remote_addr = request.remote_addr
-        else:
-            record.url = None
-            record.remote_addr = None
-
-        return super().format(record)
-
-
-# ----------------------------
 # Custom Exception: Missing Environment variable
 # ----------------------------
 class MissingEnvironmentVariableException(Exception):
@@ -42,6 +27,21 @@ def get_environment_variable(key):
             "Environment variable {key} does not exist"
         )
     return key_value
+
+
+# ----------------------------
+# Set up formatting for log entries
+# ----------------------------
+class RequestFormatter(Formatter):
+    def format(self, record):
+        if has_request_context():
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+        else:
+            record.url = None
+            record.remote_addr = None
+
+        return super().format(record)
 
 
 # ----------------------------

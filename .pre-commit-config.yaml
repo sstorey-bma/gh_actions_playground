@@ -21,3 +21,4 @@ repos:
     rev: v1.1.311
     hooks:
       - id: pyright
+        entry: pipenv run pyright
